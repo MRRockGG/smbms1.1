@@ -8,7 +8,7 @@
     </div>
     <div class="providerAdd">
         <form id="userForm" name="userForm" method="post" action="${pageContext.request.contextPath }/jsp/user.do">
-            <input type="hidden" name="method" value="savepwd">
+            <input type="hidden" name="method" value="updatePwd">
             <!--div的class 为error是验证错误，ok是验证成功-->
             <div class="info">${message}</div>
             <div class="">
@@ -22,7 +22,7 @@
                 <font color="red"></font>
             </div>
             <div>
-                <label for="reNewPassword">确认新密码：</label>
+                <label for="rnewPassword">确认新密码：</label>
                 <input type="password" name="rnewpassword" id="rnewpassword" value="">
                 <font color="red"></font>
             </div>

@@ -55,8 +55,8 @@ public class UserDaoImp implements UserDao {
         if(connection!=null){
 
             String sql = "update smbms_user set userPassword = ? where id = ?";
-            Object params[]={password,id};
-           execute= BaseDao.execute(connection, pstm, sql, params);
+            Object params[]={password,id};//Object[] params={id,password};
+           execute= BaseDao.execute(connection, pstm, sql, params);//BaseDao.execute(connection, pstm, sql, params);
             BaseDao.closeResource(null,pstm,null);
         }
        return execute;

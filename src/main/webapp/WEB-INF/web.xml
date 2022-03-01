@@ -29,7 +29,7 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/jsp/logout.do</url-pattern>
     </servlet-mapping>
-    //修改用户密码servlet
+<!--    //修改用户密码servlet-->
     <servlet>
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>com.kuang.servlet.user.UserServlet</servlet-class>
@@ -42,7 +42,7 @@
 
 
 
-    //过滤器
+<!--    //过滤器-->
 
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
@@ -52,7 +52,7 @@
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    //用户登录过滤器
+<!--    //用户登录过滤器-->
     <filter>
         <filter-name>SysFilter</filter-name>
         <filter-class>com.kuang.filter.SysFilter</filter-class>
@@ -62,5 +62,9 @@
         <url-pattern>/jsp/*</url-pattern>
     </filter-mapping>
 
+<!--    session设置,过期时间30分钟-->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 
 </web-app>

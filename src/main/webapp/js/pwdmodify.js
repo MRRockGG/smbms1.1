@@ -16,8 +16,9 @@ $(function () {
     oldpassword.on("blur", function () {
         $.ajax({
             type: "GET",
-            url: path + "/user/check",
-            data: {oldpassword: oldpassword.val()},
+            url: path + "/jsp/user.do",
+            data: {method:"pwdModify",oldpassword: oldpassword.val()},
+            dataType:"json",
             success: function (data) {
                 if (data.result == "true") {//旧密码正确
                     validateTip(oldpassword.next(), {"color": "green"}, imgYes, true);
@@ -68,11 +69,9 @@ $(function () {
         oldpassword.blur();
         newpassword.blur();
         rnewpassword.blur();
-        // oldpassword.attr("validateStatus") == "true"
-        // &&
-        // oldpassword.attr("validateStatus") == "true"
-        // &&
-        if ( newpassword.attr("validateStatus") == "true"
+
+        if ( oldpassword.attr("validateStatus") == "true"
+            &&newpassword.attr("validateStatus") == "true"
             && rnewpassword.attr("validateStatus") == "true") {
             if (confirm("确定要修改密码？")) {
                 $("#userForm").submit();

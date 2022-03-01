@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+
 //实现Servlet复用
 public class UserServlet extends HttpServlet {
     @Override
@@ -18,6 +20,8 @@ public class UserServlet extends HttpServlet {
         String method = req.getParameter("method");
         if (method!=null&&method.equals("updatePwd")){
             this.updatePwd(req, resp);
+        }else if(method.equals("pwdModify")&&method!=null){
+            this.pwdModify(req, resp);
         }
     }
 
@@ -25,11 +29,12 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
-
+    //修改密码
     public void updatePwd(HttpServletRequest req, HttpServletResponse resp){
         //从Session里面拿id
         Object o = req.getSession().getAttribute(Constants.USER_SESSION);
         String newpassword = req.getParameter("newpassword");
+
 
         System.out.println("UserServlet"+newpassword);
         System.out.println(o);
@@ -59,6 +64,30 @@ public class UserServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //验证旧密码，通过session中的用户密码
+    public  void pwdModify(HttpServletRequest req, HttpServletResponse resp){
+        //从Session里面拿id,旧密码
+        Object o = req.getSession().getAttribute(Constants.USER_SESSION);
+        String oldpassword = req.getParameter("oldpassword");
+        //万能map
+        HashMap<String, String> resultMap = new HashMap<>();
+        if(o==null){//Session失效，Session过期了
+            resultMap.put("result","sessionerror");
+
+        }else if(StringUtils.isNullOrEmpty(oldpassword)){//输入的密码为空
+                resultMap.put("result","error");
+        }else{
+            String userPassword = ((User)o).getUserPassword();
+            if(userPassword.equals(oldpassword)){
+                resultMap.put("result","true");
+            }else {
+                resultMap.put("result","false");
+            }
+
+        }
+
     }
 }
 

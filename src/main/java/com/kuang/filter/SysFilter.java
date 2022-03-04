@@ -21,7 +21,8 @@ public class SysFilter implements Filter {
         //过滤器，从Session中获取用户
         User user = (User)servletRequest1.getSession().getAttribute(Constants.USER_SESSION);
 
-        if(null==user){
+        if(user==null){
+            //家里是"/error.jsp",tomcat应用程序上下文是"/";对应的"/smbms/error.jsp"，tomcat应用程序上下文是"/smbms"
             servletResponse1.sendRedirect("/smbms/error.jsp");
         }else{
             filterChain.doFilter(servletRequest,servletResponse);

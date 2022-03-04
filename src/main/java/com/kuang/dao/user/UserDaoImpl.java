@@ -1,14 +1,18 @@
 package com.kuang.dao.user;
 
 import com.kuang.dao.BaseDao;
+import com.kuang.pojo.Role;
 import com.kuang.pojo.User;
+import com.kuang.service.user.UserServiceImpl;
 import com.mysql.jdbc.StringUtils;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserDaoImpl implements UserDao {
     @Override
@@ -105,4 +109,24 @@ public class UserDaoImpl implements UserDao {
         }
         return count;
     }
+
+    @Override
+    public List<User> getUserList(Connection connection, String userName, int userRole, int currentPageNo, int pageSize) throws Exception {
+        return null;
+    }
+
+    @Override
+    public List<Role> getRoleList(Connection connection) throws SQLException {
+        return null;
+    }
+
+    @Test
+    public void test(){
+        UserServiceImpl userService = new UserServiceImpl();
+        int userCount = userService.getUserCount(null, 0);
+        System.out.println(userCount);
+    }
+
+
+
 }

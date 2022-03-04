@@ -1,5 +1,6 @@
 package com.kuang.servlet.user;
 
+import com.alibaba.fastjson.JSONArray;
 import com.kuang.dao.BaseDao;
 import com.kuang.pojo.User;
 import com.kuang.service.user.UserServiceImpl;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 //实现Servlet复用
@@ -72,7 +74,7 @@ public class UserServlet extends HttpServlet {
         Object o = req.getSession().getAttribute(Constants.USER_SESSION);
         String oldpassword = req.getParameter("oldpassword");
         //万能map
-        HashMap<String, String> resultMap = new HashMap<>();
+        HashMap<String, String> resultMap = new HashMap<String, String>();
         if(o==null){//Session失效，Session过期了
             resultMap.put("result","sessionerror");
 
@@ -85,6 +87,19 @@ public class UserServlet extends HttpServlet {
             }else {
                 resultMap.put("result","false");
             }
+
+        }
+        try{
+            resp.setContentType("application/json");
+            PrintWriter writer = resp.getWriter();
+            //JSONArray 阿里巴巴的json工具类，转换格式
+//            resultMap = ["result","sessionerror","result","error"]
+//            Json格式 = {key，value}
+            writer.write(JSONArray.toJSONString(resultMap));
+            writer.flush();
+            writer.close();
+        }catch (IOException e){
+            e.printStackTrace();
 
         }
 

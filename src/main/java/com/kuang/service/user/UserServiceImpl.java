@@ -2,7 +2,7 @@ package com.kuang.service.user;
 
 import com.kuang.dao.BaseDao;
 import com.kuang.dao.user.UserDao;
-import com.kuang.dao.user.UserDaoImp;
+import com.kuang.dao.user.UserDaoImpl;
 import com.kuang.pojo.User;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     public UserServiceImpl() {
-        userDao = new UserDaoImp();
+        userDao = new UserDaoImpl();
     }
 
     @Override
@@ -56,12 +56,39 @@ public class UserServiceImpl implements UserService {
         return flag;
     }
 
-    @Test
-    public void test() {
-        UserServiceImpl userServiceImpl = new UserServiceImpl();
-        User admin = userServiceImpl.login("admin", "111111");
+//    @Test
+//    public void test() {
+//        UserServiceImpl userServiceImpl = new UserServiceImpl();
+//        User admin = userServiceImpl.login("admin", "111111");
+//
+//        System.out.println(admin.getUserPassword());
+//
+//
+//    }
 
-        System.out.println(admin.getUserPassword());
+    @Override
+    public int getUserCount(String username, int userRole) {
+        System.out.println("UserServiceImpl->getUserCount");
+        Connection connection = null;
+        int userCount = 0;
+        try {
+            connection = BaseDao.getConnection();
+            userCount = userDao.getUserCount(connection, username, userRole);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            BaseDao.closeResource(connection,null,null);
+        }
+        return userCount;
+    }
+
+        @Test
+        public void test() {
+        UserServiceImpl userServiceImpl = new UserServiceImpl();
+        int userCount = userServiceImpl.getUserCount(null, 0);
+
+        System.out.println(userCount);
 
 
     }

@@ -5,10 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
 </head>
-<body>
-<h1>想骗谁？你还没登录呢 爬！</h1>
-<img src="images/error.png" alt="error">
-<a href="login.jsp">回到最初的起点</a>
+<body >
+<a href="login.jsp">
+    <img src="images/erroroPage.png" alt="error">
+</a>
 </body>
 </html>

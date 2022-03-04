@@ -112,12 +112,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getUserList(Connection connection, String userName, int userRole, int currentPageNo, int pageSize) throws Exception {
-        return null;
+        return null;//补全，
     }
 
     @Override
     public List<Role> getRoleList(Connection connection) throws SQLException {
-        return null;
+        return null;//补全
     }
 
     @Test

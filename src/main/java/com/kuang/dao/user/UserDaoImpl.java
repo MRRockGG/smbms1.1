@@ -111,14 +111,65 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getUserList(Connection connection, String userName, int userRole, int currentPageNo, int pageSize) throws Exception {
-        return null;//补全，
+    public List<User> getUserList(Connection connection, String userName, int userRole, int currentPageNo, int pageSize) throws SQLException {
+        PreparedStatement pstm = null;
+        ResultSet rs=null;
+        List<User>  userList=new ArrayList<>();
+        if(connection!=null)
+        {
+            //使用流来串接sql语句
+            StringBuffer sql = new StringBuffer();
+            //默认参数查询sql
+            sql.append("select  u.*,r.roleName as userRoleName from smbms_user u,smbms_role r where u.userRole = r.id");
+            List<Object>  list=new ArrayList<>();
+            //userName参数查询
+            if(!StringUtils.isNullOrEmpty(userName)){
+                sql.append(" and u.userName like ?");
+                list.add("%"+userName+"%");//index :0
+
+            }
+            if(userRole>0){
+                sql.append(" and u.userRole = ?");
+                list.add(userRole);//index = 1;
+
+            }
+
+            //分页使用limit
+            sql.append("order by creationDate DESC limit ?,?");
+            currentPageNo=(currentPageNo-1)*pageSize;
+            list.add(currentPageNo);
+            list.add(pageSize);
+
+            //怎么把list转换为数组
+            Object[] params = list.toArray();
+            //日志，输出sql验证
+            System.out.println("UserDaoImpl->getUserCount:"+sql.toString());
+            System.out.println("sql-->"+sql.toString());
+            rs = BaseDao.execute(connection,pstm,rs,sql.toString(),params);
+            ;
+
+            if (rs.next()){
+                //从结果集中获取最终的数量
+                User _user = new User();
+                _user.setId(rs.getInt("id"));
+                _user.setUserCode(rs.getString("userCode"));
+                _user.setUserName(rs.getString("userName"));
+
+                _user.setGender(rs.getInt("gender"));
+                _user.setBirthday(rs.getDate("birthday"));
+                _user.setPhone(rs.getString("phone"));
+
+
+                _user.setUserRole(rs.getInt("userRole"));
+                _user.setUserRoleName(rs.getString("userRoleName"));
+                userList.add(_user);
+            }
+            BaseDao.closeResource(null,pstm,rs);
+        }
+        return userList;
     }
 
-    @Override
-    public List<Role> getRoleList(Connection connection) throws SQLException {
-        return null;//补全
-    }
+
 
     @Test
     public void test(){

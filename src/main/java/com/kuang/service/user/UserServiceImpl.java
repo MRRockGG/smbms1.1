@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
     //引入dao层
@@ -83,7 +84,30 @@ public class UserServiceImpl implements UserService {
         return userCount;
     }
 
-        @Test
+    @Override
+    public List<User> getUserList(String queryUserName, int queryUserRole, int currentPageNo, int pageSize) {
+        System.out.println("UserServiceImpl->getUserList");
+        Connection connection = null;
+        List<User> userList = null;
+        System.out.println("queryUserName--->"+queryUserName);
+        System.out.println("queryUserRole--->"+queryUserRole);
+        System.out.println("currentPageNo--->"+currentPageNo);
+        System.out.println("pageSize--->"+pageSize);
+        try {
+            connection = BaseDao.getConnection();
+            userList = userDao.getUserList(connection,queryUserName,queryUserRole,currentPageNo,pageSize);
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection,null,null);
+        }
+        return userList;
+    }
+
+    @Test
         public void test() {
         UserServiceImpl userServiceImpl = new UserServiceImpl();
         int userCount = userServiceImpl.getUserCount(null, 0);

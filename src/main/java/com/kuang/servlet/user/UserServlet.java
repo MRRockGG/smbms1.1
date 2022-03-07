@@ -24,12 +24,25 @@ public class UserServlet extends HttpServlet {
             this.updatePwd(req, resp);
         }else if(method.equals("pwdModify")&&method!=null){
             this.pwdModify(req, resp);
+        }else if(method.equals("query")&&method!=null){
+            this.query(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
+    }
+    //重点，难点
+    public void query(HttpServletRequest req, HttpServletResponse resp){
+        //查询用户列表
+
+        //从前端获取数据
+        String queryUserName = req.getParameter("queryname");
+        String temp = req.getParameter("queryUserRole");
+        String pageIndex = req.getParameter("pageIndex");
+
+
     }
     //修改密码
     public void updatePwd(HttpServletRequest req, HttpServletResponse resp){

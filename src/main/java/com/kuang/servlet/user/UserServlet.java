@@ -41,6 +41,20 @@ public class UserServlet extends HttpServlet {
         String queryUserName = req.getParameter("queryname");
         String temp = req.getParameter("queryUserRole");
         String pageIndex = req.getParameter("pageIndex");
+        int queryUserRole = 0;
+
+        // 获取用户列表
+        UserServiceImpl userService = new UserServiceImpl();
+
+        //页面设置
+        int pageSize = 5;
+        int currentPageNo = 1;
+
+        if(queryUserName==null){
+            queryUserName = " ";
+
+        }
+        if (temp!=null && !temp.isEmpty()){}
 
 
     }

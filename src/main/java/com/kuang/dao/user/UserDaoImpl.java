@@ -146,7 +146,7 @@ public class UserDaoImpl implements UserDao {
             System.out.println("UserDaoImpl->getUserCount:"+sql.toString());
             System.out.println("sql-->"+sql.toString());
             rs = BaseDao.execute(connection,pstm,rs,sql.toString(),params);
-            ;
+
 
             if (rs.next()){
                 //从结果集中获取最终的数量

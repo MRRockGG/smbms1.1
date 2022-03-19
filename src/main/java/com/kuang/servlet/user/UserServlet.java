@@ -37,7 +37,7 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
-    //重点，难点
+    //重点，难点，用户管理分页
     public void query(HttpServletRequest req, HttpServletResponse resp){
         //查询用户列表
 
@@ -57,33 +57,47 @@ public class UserServlet extends HttpServlet {
         if(queryUserName==null){
             queryUserName = "";
         }
-        if (temp!=null && !temp.isEmpty()){
+        if (temp!=null && !temp.equals("")){
             queryUserRole=Integer.parseInt(temp);
-        }if(pageIndex!=null){
+        }
+        if(pageIndex!=null){
             currentPageNo=Integer.parseInt(pageIndex);
         }
+        System.out.println("currentPageNo:"+currentPageNo+"pageIndex"+pageIndex);
         //获取用户的总数（分页：上一页，下一页）
         int totalCount = userService.getUserCount(queryUserName,queryUserRole);
+        System.out.println("totalCount:"+totalCount);//12
         //总页数支持
         PageSupport pageSupport = new PageSupport();
         pageSupport.setCurrentPageNo(currentPageNo);
+        System.out.println("pageSupport.setCurrentPageNo(currentPageNo);之后currentPageNo的值1"+currentPageNo);
         pageSupport.setPageSize(pageSize);
+        System.out.println("pageSupport.setPageSize(pageSize);之后pageSize的值"+pageSize);
         pageSupport.setTotalPageCount(totalCount);
+        System.out.println("pageSupport.setTotalPageCount(totalCount);;之后TotalPageCount的值"+pageSupport.getTotalPageCount());
         pageSupport.setTotalPageCountByRs();
-
+        System.out.println(" pageSupport.setTotalPageCountByRs();之后TotalPageCount的值"+pageSupport.getTotalPageCount());
         int totalPageCount = pageSupport.getTotalPageCount();
+        System.out.println("int totalPageCount = pageSupport.getTotalPageCount();"+totalPageCount);
         //控制首页和尾页
         //如果页面要小于1了，就显示第一页的东西
+        System.out.println("查找currentPageNo的值1"+currentPageNo);//11
+        System.out.println("查找totalPageCount的值"+totalPageCount);//0
+
         if(currentPageNo<1){
             currentPageNo = 1;
         }else if(currentPageNo>totalPageCount){
             currentPageNo = totalPageCount;
         }
-
+        System.out.println("查找currentPageNo的值2"+currentPageNo);//20
         //获取用户列表展示
-       userList = userService.getUserList(queryUserName, queryUserRole, currentPageNo, pageSize);
-        req.setAttribute("userList",userList);
 
+        userList = userService.getUserList(queryUserName, queryUserRole, currentPageNo, pageSize);
+        req.setAttribute("userList",userList);
+        System.out.println("获取用户列表展示");
+//        for (User user : userList) {
+//            System.out.printf(user.getUserName());
+//        }
         RoleServiceImpl roleService = new RoleServiceImpl();
         List<Role> roleList=roleService.getRoleList();
         req.setAttribute("roleList",roleList);

@@ -115,6 +115,10 @@ public class UserServiceImpl implements UserService {
 
         System.out.println(userCount);
 
+        List<User> admin = userServiceImpl.getUserList("admin", 3, 1, 5);
+        for (User user : admin) {
+            System.out.printf("ceshi"+user.getUserName());
+        }
 
     }
 }

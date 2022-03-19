@@ -14,7 +14,7 @@ public class PageSupport {
 
     public void setCurrentPageNo(int currentPageNo){
         if(currentPageNo>0){
-            this.currentPageNo =currentPageNo;
+            this.currentPageNo = currentPageNo;
         }
     }
 
@@ -50,12 +50,12 @@ public class PageSupport {
     }
 
     public void setTotalPageCountByRs(){
-        if(this.totalCount%this.pageSize ==0){
+        if(this.totalCount % this.pageSize == 0){
             this.totalPageCount=this.totalCount / this.pageSize;
-        }else if(this.totalCount%this.pageSize>0){
-            this.totalPageCount=this.totalCount/this.pageSize +1;
+        }else if(this.totalCount % this.pageSize > 0){
+            this.totalPageCount = this.totalCount / this.pageSize +1;
         }else {
-            this.totalPageCount =0;
+            this.totalPageCount = 0 ;
         }
     }
 }

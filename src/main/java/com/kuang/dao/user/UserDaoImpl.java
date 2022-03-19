@@ -135,7 +135,8 @@ public class UserDaoImpl implements UserDao {
             }
 
             //分页使用limit
-            sql.append("order by creationDate DESC limit ?,?");
+            //bug0001:下面sql的冒号后少了个 空格，导致order不能被识别
+            sql.append(" order by creationDate DESC limit ?,?");//com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'by creationDate DESC limit -5,5'
             currentPageNo=(currentPageNo-1)*pageSize;
             list.add(currentPageNo);
             list.add(pageSize);
@@ -145,6 +146,7 @@ public class UserDaoImpl implements UserDao {
             //日志，输出sql验证
             System.out.println("UserDaoImpl->getUserCount:"+sql.toString());
             System.out.println("sql-->"+sql.toString());
+
             rs = BaseDao.execute(connection,pstm,rs,sql.toString(),params);
 
 
@@ -174,8 +176,14 @@ public class UserDaoImpl implements UserDao {
     @Test
     public void test(){
         UserServiceImpl userService = new UserServiceImpl();
-        int userCount = userService.getUserCount(null, 0);
-        System.out.println(userCount);
+//        int userCount = userService.getUserCount(null, 0);
+//        System.out.println(userCount);
+
+        List<User> userList = userService.getUserList(null, 1, 1, 5);
+        for (User user : userList) {
+            String name=user.getUserName();
+            System.out.printf(name);
+        }
     }
 
 

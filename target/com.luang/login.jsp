@@ -31,7 +31,7 @@
             </div>
             <div class="subBtn">
 
-                <input type="submit" value="登录"/>
+                <input type="submit" id="submit"  value="登录"/>
                 <input type="reset" value="重置"/>
             </div>
         </form>

@@ -1,5 +1,7 @@
 package com.kuang.util;
 
+import org.junit.jupiter.api.Test;
+
 public class PageSupport {
     //当前页码-来自用户输入
     private int currentPageNo =1;
@@ -58,4 +60,6 @@ public class PageSupport {
             this.totalPageCount = 0 ;
         }
     }
+
+
 }

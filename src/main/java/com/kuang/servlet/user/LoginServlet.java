@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
 
         UserServiceImpl userService = new UserServiceImpl();
         User user = userService.login(userCode, userPassword);//这里已经把用户查取出来放到user对象里面了
-        if (user != null) {
+        if (user != null && userPassword.equals(user.getUserPassword())) {
             //查有此人可以登录
             //将用户的信息放到session中
             req.getSession().setAttribute(Constants.USER_SESSION, user);

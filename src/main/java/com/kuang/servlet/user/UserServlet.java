@@ -81,7 +81,7 @@ public class UserServlet extends HttpServlet {
         System.out.println("int totalPageCount = pageSupport.getTotalPageCount();"+totalPageCount);
         //控制首页和尾页
         //如果页面要小于1了，就显示第一页的东西
-        System.out.println("查找currentPageNo的值1"+currentPageNo);//11
+        System.out.println("查找currentPageNo的值1"+currentPageNo);//1
         System.out.println("查找totalPageCount的值"+totalPageCount);//0
 
         if(currentPageNo<1){
@@ -89,9 +89,9 @@ public class UserServlet extends HttpServlet {
         }else if(currentPageNo>totalPageCount){
             currentPageNo = totalPageCount;
         }
-        System.out.println("查找currentPageNo的值2"+currentPageNo);//20
+        System.out.println("查找currentPageNo的值2"+currentPageNo);//0
         //获取用户列表展示
-
+        currentPageNo =1;
         userList = userService.getUserList(queryUserName, queryUserRole, currentPageNo, pageSize);
         req.setAttribute("userList",userList);
         System.out.println("获取用户列表展示");

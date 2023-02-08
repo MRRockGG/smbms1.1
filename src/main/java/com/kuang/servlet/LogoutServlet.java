@@ -1,4 +1,4 @@
-package com.kuang.servlet.user;
+package com.kuang.servlet;
 
 import com.kuang.util.Constants;
 

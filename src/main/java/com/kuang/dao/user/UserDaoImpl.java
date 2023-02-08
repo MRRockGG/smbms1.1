@@ -143,14 +143,16 @@ public class UserDaoImpl implements UserDao {
 
             //怎么把list转换为数组
             Object[] params = list.toArray();
+            System.out.println("----------------------------------");
+            System.out.println(params);
             //日志，输出sql验证
-            System.out.println("UserDaoImpl->getUserCount:"+sql.toString());
+            //System.out.println("UserDaoImpl->getUserCount:"+sql.toString());
             System.out.println("sql-->"+sql.toString());
 
             rs = BaseDao.execute(connection,pstm,rs,sql.toString(),params);
 
 
-            if (rs.next()){
+            while (rs.next()){
                 //从结果集中获取最终的数量
                 User _user = new User();
                 _user.setId(rs.getInt("id"));
@@ -160,8 +162,6 @@ public class UserDaoImpl implements UserDao {
                 _user.setGender(rs.getInt("gender"));
                 _user.setBirthday(rs.getDate("birthday"));
                 _user.setPhone(rs.getString("phone"));
-
-
                 _user.setUserRole(rs.getInt("userRole"));
                 _user.setUserRoleName(rs.getString("userRoleName"));
                 userList.add(_user);
@@ -179,7 +179,7 @@ public class UserDaoImpl implements UserDao {
 //        int userCount = userService.getUserCount(null, 0);
 //        System.out.println(userCount);
 
-        List<User> userList = userService.getUserList(null, 1, 1, 5);
+        List<User> userList = userService.getUserList(null, 2, 1, 5);
         for (User user : userList) {
             String name=user.getUserName();
             System.out.printf(name);

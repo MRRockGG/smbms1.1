@@ -14,7 +14,7 @@
     <!--  Servlet-->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.kuang.servlet.user.LoginServlet</servlet-class>
+        <servlet-class>com.kuang.servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -23,7 +23,7 @@
 
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>com.kuang.servlet.user.LogoutServlet</servlet-class>
+        <servlet-class>com.kuang.servlet.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
@@ -32,7 +32,7 @@
 <!--    //修改用户密码servlet-->
     <servlet>
         <servlet-name>UserServlet</servlet-name>
-        <servlet-class>com.kuang.servlet.user.UserServlet</servlet-class>
+        <servlet-class>com.kuang.servlet.UserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>

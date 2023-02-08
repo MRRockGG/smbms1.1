@@ -39,7 +39,6 @@ public class PageSupport {
     public void setPageSize(int pageSize) {
         if(pageSize>0){
             this.pageSize = pageSize;
-
         }
     }
 

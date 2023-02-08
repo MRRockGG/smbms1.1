@@ -93,11 +93,10 @@ public class UserServiceImpl implements UserService {
         System.out.println("queryUserRole--->"+queryUserRole);
         System.out.println("currentPageNo--->"+currentPageNo);
         System.out.println("pageSize--->"+pageSize);
+
         try {
             connection = BaseDao.getConnection();
             userList = userDao.getUserList(connection,queryUserName,queryUserRole,currentPageNo,pageSize);
-
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,7 +106,7 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
-
+    //有问题，没输出每个参数。
     @Test
         public void test() {
         UserServiceImpl userServiceImpl = new UserServiceImpl();
@@ -115,7 +114,7 @@ public class UserServiceImpl implements UserService {
 
         System.out.println(userCount);
 
-        List<User> admin = userServiceImpl.getUserList("admin", 3, 1, 5);
+        List<User> admin = userServiceImpl.getUserList("", 2, 1, 5);
         for (User user : admin) {
             System.out.printf("ceshi"+user.getUserName());
         }

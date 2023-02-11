@@ -70,20 +70,16 @@ public class UserServlet extends HttpServlet {
         //总页数支持
         PageSupport pageSupport = new PageSupport();
         pageSupport.setCurrentPageNo(currentPageNo);
-        //System.out.println("pageSupport.setCurrentPageNo(currentPageNo);之后currentPageNo的值1"+currentPageNo);
-        pageSupport.setPageSize(pageSize);
-        //System.out.println("pageSupport.setPageSize(pageSize);之后pageSize的值"+pageSize);
-        pageSupport.setTotalPageCount(totalCount);
-        //System.out.println("pageSupport.setTotalPageCount(totalCount);;之后TotalPageCount的值"+pageSupport.getTotalPageCount());
-        //pageSupport.setTotalPageCountByRs();
-        //System.out.println(" pageSupport.setTotalPageCountByRs();之后TotalPageCount的值"+pageSupport.getTotalPageCount());
 
-        int totalPageCount = pageSupport.getTotalPageCount();
-        //System.out.println("int totalPageCount = pageSupport.getTotalPageCount();"+totalPageCount);
+        pageSupport.setPageSize(pageSize);
+
+        pageSupport.setTotalPageCount(totalCount);
+
+        int totalPageCount = totalCount/pageSize+1;
+
         //控制首页和尾页
         //如果页面要小于1了，就显示第一页的东西
-        //System.out.println("查找currentPageNo的值1"+currentPageNo);//1
-        //System.out.println("查找totalPageCount的值"+totalPageCount);//0
+
 
         if(currentPageNo<1){
             currentPageNo = 1;
@@ -93,6 +89,7 @@ public class UserServlet extends HttpServlet {
 
 
         System.out.println("查找currentPageNo的值servlet传入"+currentPageNo);//0
+        System.out.println();
         //获取用户列表展示
         //currentPageNo =1;
 

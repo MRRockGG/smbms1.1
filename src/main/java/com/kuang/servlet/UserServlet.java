@@ -30,10 +30,14 @@ public class UserServlet extends HttpServlet {
             this.pwdModify(req, resp);
         }else if(method.equals("query")&&method!=null){
             this.query(req, resp);
+        }else if (method!=null&&method.equals("ucexist")){
+            this.ucexist(req,resp);
         }
     }
 
     @Override
+    //新增usercode是否存在
+
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
@@ -189,6 +193,10 @@ public class UserServlet extends HttpServlet {
             e.printStackTrace();
 
         }
+
+    }
+
+    public  void ucexist(HttpServletRequest req, HttpServletResponse resp){
 
     }
 }

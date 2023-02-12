@@ -14,4 +14,6 @@ public interface UserService {
     //根据条件查询用户列表
     public List<User> getUserList(String queryUserName,int queryUserRole,int currentPageNo,int pageSize);
 
+    public  Boolean ucIsExist(String userCode);
+
 }

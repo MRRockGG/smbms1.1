@@ -38,7 +38,10 @@
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/jsp/user.do</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/user/ucexist</url-pattern>
+    </servlet-mapping>
 
 <!--    //过滤器-->
 

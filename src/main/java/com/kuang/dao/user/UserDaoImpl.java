@@ -171,19 +171,44 @@ public class UserDaoImpl implements UserDao {
         return userList;
     }
 
+    @Override
+    public int getUserCodeCount(Connection connection, String userCode) throws SQLException {
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "select count(userCode) from smbms_user where userCode = ?";//and userPassword = ?
+            Object[] params = {userCode};
+
+            rs = BaseDao.execute(connection, pstm, rs, sql, params);
+            System.out.println("rs长啥样？"+rs);
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+
+            System.out.println("UserDaoImpl->getUserCodeCount:"+sql.toString());
+            System.out.println("count:"+count);
+            System.out.println("params"+params[0]);
+            BaseDao.closeResource(null, pstm, rs);
+
+        }
+
+        return count;
+
+    }
 
 
     @Test
     public void test(){
         UserServiceImpl userService = new UserServiceImpl();
-//        int userCount = userService.getUserCount(null, 0);
-//        System.out.println(userCount);
+       boolean userCount = userService.ucIsExist("");
+       System.out.println(userCount);
 
-        List<User> userList = userService.getUserList(null, 2, 1, 5);
-        for (User user : userList) {
-            String name=user.getUserName();
-            System.out.printf(name);
-        }
+//        List<User> userList = userService.getUserList(null, 2, 1, 5);
+//        for (User user : userList) {
+//            String name=user.getUserName();
+//            System.out.printf(name);
+//        }
     }
 
 

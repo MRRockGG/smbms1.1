@@ -197,6 +197,46 @@ public class UserServlet extends HttpServlet {
     }
 
     public  void ucexist(HttpServletRequest req, HttpServletResponse resp){
+        //从页面拿输入的userCode
+        String usercode = req.getParameter("userCode");
+        //查询此usercode是否存在
+
+        //万能map
+        HashMap<String, String> resultMap = new HashMap<String, String>();
+
+
+        //默认存在
+        Boolean flag = false;
+        //如果不存在，纳闷flag就是fluse
+
+
+        System.out.println(StringUtils.isNullOrEmpty(usercode));
+        System.out.println(usercode);
+        if(StringUtils.isNullOrEmpty(usercode)) {
+            UserServiceImpl userService = new UserServiceImpl();
+            flag = userService.ucIsExist(usercode);
+            System.out.println(flag);
+            if (flag) {//如果flag为真那么说明存在此usercode
+                resultMap.put("userCode", "exist");
+            }//否则的话flag为假说明不存在
+        }else {
+            resultMap.put("userCode", "null");
+        }
+
+        try{
+            resp.setContentType("application/json");
+            PrintWriter writer = resp.getWriter();
+            //JSONArray 阿里巴巴的json工具类，转换格式
+//            resultMap = ["result","sessionerror","result","error"]
+//            Json格式 = {key，value}
+            writer.write(JSONArray.toJSONString(resultMap));
+            writer.flush();
+            writer.close();
+        }catch (IOException e){
+            e.printStackTrace();
+
+        }
+
 
     }
 }

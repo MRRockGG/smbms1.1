@@ -106,6 +106,29 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
+    @Override
+    public Boolean ucIsExist(String userCode) {
+
+        Connection connection = null;
+        int userCodeCount = 0;
+        try {
+            connection = BaseDao.getConnection();
+            userCodeCount = userDao.getUserCodeCount(connection, userCode);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            BaseDao.closeResource(connection,null,null);
+        }
+
+        if (userCodeCount>0){
+            return true;
+        }else return false;
+
+
+
+    }
+
     //有问题，没输出每个参数。
     @Test
         public void test() {

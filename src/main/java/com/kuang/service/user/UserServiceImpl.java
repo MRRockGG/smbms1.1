@@ -4,6 +4,7 @@ import com.kuang.dao.BaseDao;
 import com.kuang.dao.user.UserDao;
 import com.kuang.dao.user.UserDaoImpl;
 import com.kuang.pojo.User;
+import com.kuang.util.Constants;
 import org.junit.jupiter.api.Test;
 
 
@@ -129,6 +130,37 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public boolean add(User user)  {
+        boolean flag = false;
+        Connection connection = null;
+
+        try {
+            connection = BaseDao.getConnection();
+            connection.setAutoCommit(false);
+            int upDateRows=userDao.add(connection,user);
+            connection.commit();
+            if (upDateRows>0){
+                flag = true;
+                System.out.println("add success");
+            }else {
+                System.out.println("add failed");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                System.out.println("rockback***********************");
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }finally {
+            //zaiservice层进行connrction连接关闭
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
     //有问题，没输出每个参数。
     @Test
         public void test() {

@@ -197,6 +197,26 @@ public class UserDaoImpl implements UserDao {
 
     }
 
+    @Override
+    public int add(Connection connection,User user) throws SQLException {
+        PreparedStatement pstm = null;
+        int upDateRows = 0;
+        if (null != connection){
+            String sql = "insert into smbms_user(userCode,userName,userPassword,"+
+                    "userRole,gender,birthday,phone,address,creationDate,createdBy) "+
+                    "values(?,?,?,?,?,?,?,?,?,?)";
+            Object[] params = {user.getUserCode(),user.getUserName(),user.getUserPassword(),
+                                user.getUserRole(), user.getGender(),user.getBirthday(),user.getPhone(),user.getAddress(),
+                                user.getCreationDate(),user.getCreatedBy()};
+            System.out.println("UserDaoImpl->add:"+sql.toString());
+            upDateRows = BaseDao.execute(connection, pstm, sql, params);
+            BaseDao.closeResource(null,pstm,null);
+
+
+        }
+        return upDateRows;
+    }
+
 
     @Test
     public void test(){

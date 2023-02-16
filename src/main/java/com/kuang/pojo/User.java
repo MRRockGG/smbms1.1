@@ -14,15 +14,17 @@ public class User {
     private String address;//'地址'
     private Integer userRole;//'用户角色（取自角色表-角色id）'
     private Integer createdBy;//'创建者（userId）'
-    private Timestamp creationDate;//'创建时间'
+    private Date creationDate;//'创建时间'
     private Integer modifyBy;//'更新者（userId）'
-    private Timestamp modifyDate;//'更新时间'
+    private Date modifyDate;//'更新时间'
 
-    public void setCreationDate(Timestamp creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
-    public void setModifyDate(Timestamp modifyDate) {
+    public Date getCreationDate(){return creationDate;}
+
+    public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
     }
 

@@ -19,4 +19,6 @@ public interface UserDao {
     public List<User> getUserList(Connection connection,String userName,int userRole,int currentPageNo,int pageSize)throws SQLException;
     //通过条件查询是否存在此userCode
     public int getUserCodeCount(Connection connection,String userCode)throws SQLException;
+
+    public int add(Connection connection, User user) throws SQLException;
 }

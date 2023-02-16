@@ -2,6 +2,7 @@ package com.kuang.service.user;
 
 import com.kuang.pojo.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface UserService {
@@ -15,5 +16,7 @@ public interface UserService {
     public List<User> getUserList(String queryUserName,int queryUserRole,int currentPageNo,int pageSize);
 
     public  Boolean ucIsExist(String userCode);
+
+    public  boolean add(User user) throws SQLException;
 
 }

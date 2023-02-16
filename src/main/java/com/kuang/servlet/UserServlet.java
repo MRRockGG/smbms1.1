@@ -16,6 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +36,10 @@ public class UserServlet extends HttpServlet {
             this.query(req, resp);
         }else if (method!=null&&method.equals("ucexist")){
             this.ucexist(req,resp);
+        }else if (method!=null&&method.equals("getrolelist")){
+            this.getrolelist(req,resp);
+        }else if (method!=null&&method.equals("add")){
+            this.add(req,resp);
         }
     }
 
@@ -210,9 +218,9 @@ public class UserServlet extends HttpServlet {
         //如果不存在，纳闷flag就是fluse
 
 
-        System.out.println(StringUtils.isNullOrEmpty(usercode));
-        System.out.println(usercode);
-        if(StringUtils.isNullOrEmpty(usercode)) {
+        System.out.println("StringUtils.isNullOrEmpty(usercode):"+StringUtils.isNullOrEmpty(usercode));
+        System.out.println("usercode:"+usercode);
+        if(!StringUtils.isNullOrEmpty(usercode)) {
             UserServiceImpl userService = new UserServiceImpl();
             flag = userService.ucIsExist(usercode);
             System.out.println(flag);
@@ -237,6 +245,69 @@ public class UserServlet extends HttpServlet {
 
         }
 
+
+    }
+
+    public void getrolelist(HttpServletRequest req, HttpServletResponse resp){
+
+//        HashMap<String, String> resultMap = new HashMap<String, String>();//存放ajaxdata数据
+        RoleServiceImpl roleService = new RoleServiceImpl();
+        List<Role> roleList=roleService.getRoleList();//role_id,role,code,role_name
+
+//        for (Role role : roleList) {
+//            resultMap.put(role.getId().toString(),role.getRoleName());
+//        }
+
+        try{
+            resp.setContentType("application/json");
+            PrintWriter writer = resp.getWriter();
+            //JSONArray 阿里巴巴的json工具类，转换格式
+//            resultMap = ["result","sessionerror","result","error"]
+//            Json格式 = {key，value}
+            writer.write(JSONArray.toJSONString(roleList));
+            writer.flush();
+            writer.close();
+        }catch (IOException e){
+            e.printStackTrace();
+
+        }
+
+    }
+
+    public void add(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        String userCode = req.getParameter("userCode");
+        String userName = req.getParameter("userName");
+        String userPassword = req.getParameter("userPassword");
+        String gender = req.getParameter("gender");
+        String birthday = req.getParameter("birthday");
+        String phone = req.getParameter("phone");
+        String address = req.getParameter("address");
+        String userRole = req.getParameter("userRole");
+
+        User user = new User();
+        user.setUserCode(userCode);
+        user.setUserName(userName);
+        user.setUserPassword(userPassword);
+        user.setAddress(address);
+        try {
+            user.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        user.setGender(Integer.valueOf(gender));
+        user.setPhone(phone);
+        user.setUserRole(Integer.valueOf(userRole));
+        user.setCreationDate(new Date());
+        user.setCreatedBy(((User)req.getSession().getAttribute(Constants.USER_SESSION)).getId());
+
+        UserServiceImpl userService = new UserServiceImpl();
+        boolean flag = userService.add(user);
+        System.out.println("add成功吗"+flag);
+        if (flag){
+            resp.sendRedirect(req.getContextPath()+"/jsp/user.do?method=query");
+        }else {
+            req.getRequestDispatcher("useradd.jsp").forward(req,resp);
+        }
 
     }
 }
